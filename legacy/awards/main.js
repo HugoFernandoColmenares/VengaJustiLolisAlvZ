@@ -116,7 +116,7 @@ const winnerImageMap = {
     "Uma Musume": "https://wallpapercave.com/wp/wp15723743.jpg",
     "Frieren": "https://images6.alphacoders.com/134/thumb-1920-1342229.png",
     "Golshi": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2025/07/umamusume-gold-ship-header.jpg",
-    "Feith Noir": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1edf7e04-7ebf-4282-9998-6d804aec1a97/dksudw7-7b3a3280-e098-4f96-bac2-92021d25217b.png/v1/fill/w_1032,h_774,q_70,strp/woodheart_cafe___luna_blanc_artwork_by_feithnoir_dksudw7-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTYwIiwicGF0aCI6Ii9mLzFlZGY3ZTA0LTdlYmYtNDI4Mi05OTk4LTZkODA0YWVjMWE5Ny9ka3N1ZHc3LTdiM2EzMjgwLWUwOTgtNGY5Ni1iYWMyLTkyMDIxZDI1MjE3Yi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.IZOWFENNnP8E6TVYQqT-7WQDyPOfCeKDaqX1t8x4KY4",
+    "Feith Noir": "" /* URL firmada de DeviantArt (token caducable) eliminada por seguridad */,
 };
 
 const themeColors = ["#FFCC00", "#00BFFF", "#EC4899", "#22C55E", "#CC65FE", "#FF9F40", "#4BC0C0"];

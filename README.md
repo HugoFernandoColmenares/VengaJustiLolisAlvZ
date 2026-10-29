@@ -40,18 +40,18 @@ Requisito único: **Settings → Pages → Source: GitHub Actions**. Los PR corr
 
 ## Configurar Firebase
 1. Crea un proyecto en la consola de Firebase (plan Spark), activa Firestore y Authentication → Google, y agrega `hugofernandocolmenares.github.io` a los dominios autorizados.
-2. Registra una app web y pega su `firebaseConfig` en [`src/environments/environment.ts`](src/environments/environment.ts). Si `apiKey` queda vacío, la app usa el modo demo.
+2. Registra una app web y guarda los valores de su `firebaseConfig` como **secrets del repo** (`FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`). El workflow de deploy los inyecta en el build; [`src/environments/environment.ts`](src/environments/environment.ts) queda **vacío en el repo** y, sin `apiKey`, la app usa el modo demo.
 3. `npx firebase-tools deploy --only firestore:rules,firestore:indexes`
 4. Crea `admins/{tuUID}` en Firestore para tener permisos de admin.
 
-Paso a paso completo en la [guía de arquitectura](docs/files/guia-arquitectura.md#crear-el-proyecto-firebase-paso-a-paso). No se suben secretos: la config web de Firebase es pública y la seguridad la dan [`firestore.rules`](firestore.rules).
+Paso a paso completo en la [guía de arquitectura](docs/files/guia-arquitectura.md#crear-el-proyecto-firebase-paso-a-paso). No se suben secretos: la config web de Firebase no es secreta (la seguridad la dan [`firestore.rules`](firestore.rules)), pero igual se mantiene fuera del repo; `.env*` y archivos de *service account* están en `.gitignore`.
 
 ## Documentación
 - [Auditoría de los sitios originales](docs/files/auditoria.md)
 - [Lista de mejoras](docs/files/mejoras.md)
 - [Guía de arquitectura](docs/files/guia-arquitectura.md) — stack, carpetas, BaaS, modelo de datos, reglas, deploy
 - [Guía de diseño](docs/files/guia-diseno.md) — colores, tipografía, componentes, responsive, flujos
-- [Capturas](docs/screenshots/) — `a-*`/`b-*` = sitios originales, `new-*` = app nueva
+- [Capturas](docs/screenshots/) — `a-*`/`b-*` = sitios originales, `new-*` = app nueva (`-phone` 375 px, `-tablet` 768 px, `-desktop` 1440 px)
 
 ## Créditos
 Desarrollado con ♥ y caos por **[FeithNoir](https://github.com/FeithNoir)**. Código bajo licencia MIT ([LICENSE](LICENSE)). Las imágenes de terceros enlazadas en los premios pertenecen a sus autores.

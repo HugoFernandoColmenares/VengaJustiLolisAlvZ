@@ -1,6 +1,9 @@
 /**
- * Configuración pública de Firebase (no es secreta, pero NO la subas si no quieres).
+ * Configuración web de Firebase: DEJAR VACÍA EN EL REPO.
+ * En el deploy, GitHub Actions la rellena desde los secrets del repo (scripts/inject-firebase-env.mjs).
  * Si `apiKey` está vacío, la app usa el backend local (localStorage) como modo demo.
+ * Para probar Firebase en tu PC: `FIREBASE_API_KEY=... node scripts/inject-firebase-env.mjs` y NO hagas commit
+ * del archivo modificado (`git restore src/environments/environment.ts`).
  * Ver docs/files/guia-arquitectura.md → "Crear el proyecto Firebase".
  */
 export const environment = {

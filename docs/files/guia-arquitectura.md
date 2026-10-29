@@ -20,7 +20,7 @@
 ├─ legacy/lore/            sitio original de lore (copia de FeithNoir/vengajustilolisalvz)
 ├─ public/                 favicon, og-image.png (se copian tal cual)
 ├─ scripts/                spa-404.mjs (crea 404.html y .nojekyll), serve-dist.mjs (sirve el build como Pages)
-├─ src/environments/       environment.ts (config pública de Firebase + año de votación)
+├─ src/environments/       environment.ts (config de Firebase VACÍA en el repo, se inyecta en el deploy + año de votación)
 ├─ src/app/
 │  ├─ app.ts / app.routes.ts / app.config.ts
 │  ├─ core/backend/        backend.ts (interfaz + token), local-backend.ts, firebase-backend.ts, backend.provider.ts, models.ts
@@ -89,7 +89,10 @@ Probar las reglas: `npx firebase-tools emulators:start --only firestore` y apunt
 3. **Build → Authentication → Comenzar → Método de acceso → Google → Habilitar** (elige el email de soporte).
 4. **Authentication → Configuración → Dominios autorizados → Agregar dominio:** `hugofernandocolmenares.github.io` (y `localhost` ya viene).
 5. **Configuración del proyecto (⚙️) → Tus apps → Web (`</>`)** → apodo `vengajusti-web` → *no* marques Firebase Hosting → copia el objeto `firebaseConfig`.
-6. Pega esos valores en `src/environments/environment.ts` (`apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId`). Esta config es **pública por diseño**: la seguridad la dan las reglas, no la clave. Aun así, en **Google Cloud Console → APIs y servicios → Credenciales** puedes restringir la API key a los referers `https://hugofernandocolmenares.github.io/*` y `http://localhost:*`.
+6. **No pegues la config en el repo.** Ve a GitHub → repo → **Settings → Secrets and variables → Actions → New repository secret** y crea: `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID`, `FIREBASE_APP_ID`. El workflow `deploy.yml` ejecuta `scripts/inject-firebase-env.mjs`, que escribe esos valores en `src/environments/environment.ts` **solo dentro del runner** antes de `npm run build`; el archivo del repo se queda con valores vacíos. Luego relanza el workflow (**Actions → Deploy a GitHub Pages → Run workflow**).
+   - La `apiKey` web de Firebase **no es un secreto** (termina dentro del JS público): la seguridad la dan las reglas de Firestore y Auth. Se deja fuera del repo para no atarla al historial, poder rotarla sin commits y evitar alertas de escáneres. Restringe la key en **Google Cloud Console → APIs y servicios → Credenciales** a los referers `https://hugofernandocolmenares.github.io/*` y `http://localhost:*`.
+   - Para probar en tu PC: `FIREBASE_API_KEY=... FIREBASE_PROJECT_ID=... node scripts/inject-firebase-env.mjs && npm start`, y antes de commitear `git restore src/environments/environment.ts`.
+   - **Nunca** subas archivos de *service account* (`*-firebase-adminsdk-*.json`, `serviceAccount*.json`) ni `.env*`: están en `.gitignore`. Esos sí son secretos.
 7. Despliega reglas e índices desde tu PC:
    ```bash
    npx firebase-tools login
