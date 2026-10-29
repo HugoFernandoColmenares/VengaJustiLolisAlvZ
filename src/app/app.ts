@@ -4,9 +4,10 @@ import { BACKEND } from './core/backend/backend';
 
 @Component({
   selector: 'app-root',
+  host: { '(document:keydown.escape)': 'closeMenu()' },
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
-    <a class="btn btn--dark skip-link" href="#contenido">Saltar al contenido</a>
+    <a class="btn btn--dark skip-link" href="#contenido" (click)="skipToContent($event)">Saltar al contenido</a>
     <header class="site-header">
       <a routerLink="/" class="logo" (click)="menuOpen.set(false)">VengaJustiLolis <span>Alv Z</span></a>
       <button class="menu-toggle" type="button" [attr.aria-expanded]="menuOpen()" aria-controls="menu-principal"
@@ -64,6 +65,18 @@ import { BACKEND } from './core/backend/backend';
 export class App {
   protected readonly backend = inject(BACKEND);
   protected readonly menuOpen = signal(false);
+  /** Con `<base href>` un enlace "#id" navegaría a la portada; enfocamos el <main> a mano. */
+  protected skipToContent(ev: Event) {
+    ev.preventDefault();
+    const main = document.getElementById('contenido');
+    main?.focus();
+    main?.scrollIntoView();
+  }
+  protected closeMenu() {
+    if (!this.menuOpen()) return;
+    this.menuOpen.set(false);
+    document.querySelector<HTMLElement>('.menu-toggle')?.focus();
+  }
   protected readonly year = new Date().getFullYear();
   protected readonly links = [
     { path: '/', label: 'Inicio' },

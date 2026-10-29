@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', title: 'VengaJustiLolis Alv Z', loadComponent: () => import('./pages/home').then(m => m.HomePage) },
+  { path: '', title: 'VengaJustiLolis Alv Z — Premios, lore y caos de la Grieta', loadComponent: () => import('./pages/home').then(m => m.HomePage) },
   { path: 'premios/2025', title: 'Premios VJL 2025 — Resultados', loadComponent: () => import('./pages/awards-2025').then(m => m.Awards2025Page) },
   { path: 'premios', pathMatch: 'full', redirectTo: 'premios/2025' },
   { path: 'votar', title: 'Votar — Premios VJL', loadComponent: () => import('./pages/vote').then(m => m.VotePage) },

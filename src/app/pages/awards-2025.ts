@@ -76,7 +76,17 @@ export class Awards2025Page {
   protected readonly opinions = OPINIONS_2025;
   protected bg(img: string | null, i: number) {
     const shade = 'linear-gradient(to right, rgba(0,0,0,.85), rgba(0,0,0,.25))';
-    return img ? `${shade}, url('${img}')` : `${shade}, repeating-linear-gradient(45deg, ${AVATAR[i % 6]} 0 20px, #000 20px 23px)`;
+    if (img) return `${shade}, url('${img}')`;
+    const c = AVATAR[i % 6];
+    const art = [
+      `radial-gradient(circle at 80% 50%, ${c} 0 18%, transparent 19%), repeating-radial-gradient(circle at 80% 50%, ${c} 0 6px, #000 6px 9px)`,
+      `repeating-linear-gradient(45deg, ${c} 0 20px, #000 20px 23px)`,
+      `repeating-conic-gradient(from 0deg at 85% 50%, ${c} 0 10deg, #111 10deg 20deg)`,
+      `repeating-radial-gradient(circle at 0 0, ${c} 0 10px, #000 10px 12px)`,
+      `repeating-linear-gradient(-45deg, ${c} 0 12px, #fff 12px 14px, ${c} 14px 26px, #000 26px 29px)`,
+      `linear-gradient(135deg, ${c} 25%, #000 25% 30%, ${c} 30% 55%, #000 55% 60%, ${c} 60%)`,
+    ];
+    return `${shade}, ${art[i % art.length]}`;
   }
   protected avatar(j: number) { return AVATAR[j % AVATAR.length]; }
   protected go(e: Event, id: string) {

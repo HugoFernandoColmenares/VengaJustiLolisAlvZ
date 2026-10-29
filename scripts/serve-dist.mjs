@@ -9,6 +9,7 @@ createServer(async (req, res) => {
   if (!url.startsWith(base)) { res.writeHead(302, { location: base }); return res.end(); }
   let rel = normalize(url.slice(base.length)).replace(/^(\.\.[/\\])+/, '') || 'index.html';
   if (rel === '.' || rel.endsWith('/')) rel = join(rel, 'index.html');
-  try { const body = await readFile(join(root, rel)); res.writeHead(200, { 'content-type': types[extname(rel)] ?? 'application/octet-stream' }); res.end(body); }
+  const tryRead = async () => { try { return await readFile(join(root, rel)); } catch { rel = join(rel, 'index.html'); return readFile(join(root, rel)); } };
+  try { const body = await tryRead(); res.writeHead(200, { 'content-type': types[extname(rel)] ?? 'application/octet-stream' }); res.end(body); }
   catch { res.writeHead(404, { 'content-type': types['.html'] }); res.end(await readFile(join(root, '404.html'))); }
 }).listen(port, () => console.log(`http://localhost:${port}${base}`));

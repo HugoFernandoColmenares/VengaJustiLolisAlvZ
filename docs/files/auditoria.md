@@ -103,9 +103,9 @@ Prioridad 1 = hacerlo ya (se aplicó en la fusión ✅), 2 = pronto, 3 = cuando 
 | 1 | Una sola carga de fuentes (Bangers + Outfit + VT323) con `preconnect` y `display=swap`; quitar Roboto | A7 | ✅ |
 | 1 | Reemplazar la imagen con token caducable de "Admin del Año" por un fondo propio | A2 | ✅ |
 | 1 | Rutas reales (lazy) con `scroll-margin-top` en anclas | A14, B5 | ✅ |
-| 2 | Subir a `public/img/` arte propio (o con permiso) para las cabeceras de categorías y personajes, y dejar de *hotlinkear* | A2, B1 | ⏳ TODO |
+| 2 | Dejar de *hotlinkear* (arte CSS por categoría) ✅; subir a `public/img/` arte propio para cabeceras y personajes ⏳ | A2, B1 | ✅ parcial |
 | 2 | Votación anual y posts con backend (Firebase), un voto por persona/categoría/año | — | ✅ (falta crear el proyecto Firebase) |
 | 2 | Pasar localismos de España a español latino en textos de lore (hecho: "móvil" → "celular"; revisar el resto con el grupo) | B10 | ✅ parcial |
-| 3 | Prerenderizar (SSG) las páginas estáticas para mejorar SEO sin JS | A10 | ⏳ |
+| 3 | Prerenderizar (SSG) las páginas estáticas para mejorar SEO sin JS (por ahora: `index.html` por ruta para responder 200) | A10 | ⏳ |
 | 3 | Auditoría con lector de pantalla real (NVDA/TalkBack) y Lighthouse en CI | — | ⏳ |
 | 3 | Galería/banner real del juego de RPG Maker cuando exista | B1 | ⏳ |
