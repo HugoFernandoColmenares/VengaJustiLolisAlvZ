@@ -1,0 +1,6 @@
+{
+  "indexes": [
+    { "collectionGroup": "votes", "queryScope": "COLLECTION", "fields": [ { "fieldPath": "uid", "order": "ASCENDING" }, { "fieldPath": "year", "order": "ASCENDING" } ] }
+  ],
+  "fieldOverrides": []
+}

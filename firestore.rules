@@ -1,0 +1,64 @@
+rules_version = '2';
+// Reglas de VengaJusti (plan Spark). Desplegar con: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)); }
+    function votePath(id) { return /databases/$(database)/documents/votes/$(id); }
+
+    // Lista de admins: solo se gestiona desde la consola de Firebase.
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Categorías votables. Id = "{year}_{slug}". Solo admins crean/editan.
+    match /categories/{catId} {
+      allow read: if true;
+      allow create, update: if isAdmin()
+        && request.resource.data.year is int
+        && request.resource.data.title is string
+        && request.resource.data.nominees is list
+        && catId == string(request.resource.data.year) + '_' + request.resource.data.slug;
+      allow delete: if isAdmin();
+    }
+
+    // Votos. Id = "{year}_{categoryId}_{uid}" ⇒ un voto por usuario, categoría y año.
+    match /votes/{voteId} {
+      allow read: if signedIn() && resource.data.uid == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && voteId == string(request.resource.data.year) + '_' + request.resource.data.categoryId + '_' + request.auth.uid
+        && get(/databases/$(database)/documents/categories/$(string(request.resource.data.year) + '_' + request.resource.data.categoryId)).data.open == true
+        && request.resource.data.nominee in get(/databases/$(database)/documents/categories/$(string(request.resource.data.year) + '_' + request.resource.data.categoryId)).data.nominees
+        && request.resource.data.keys().hasOnly(['year', 'categoryId', 'uid', 'nominee', 'createdAt']);
+      allow update, delete: if false; // el voto es definitivo
+    }
+
+    // Conteos agregados públicos. Id = "{year}_{categoryId}". Solo +1 al nominado votado
+    // y solo dentro de la misma transacción que crea el voto del usuario.
+    match /tallies/{tallyId} {
+      function myVote() { return votePath(tallyId + '_' + request.auth.uid); }
+      function newVoteNominee() { return getAfter(myVote()).data.nominee; }
+      function votingNow() { return signedIn() && !exists(myVote()) && existsAfter(myVote()); }
+      allow read: if true;
+      allow create: if votingNow()
+        && request.resource.data.counts.keys().hasOnly([newVoteNominee()])
+        && request.resource.data.counts[newVoteNominee()] == 1;
+      allow update: if votingNow()
+        && request.resource.data.counts.diff(resource.data.counts).affectedKeys().hasOnly([newVoteNominee()])
+        && request.resource.data.counts[newVoteNominee()] == resource.data.counts.get(newVoteNominee(), 0) + 1;
+      allow delete: if false;
+    }
+
+    // Posts: lectura pública, solo admins escriben.
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isAdmin()
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.title is string && request.resource.data.title.size() <= 140
+        && request.resource.data.body is string && request.resource.data.body.size() <= 20000;
+      allow update, delete: if isAdmin();
+    }
+  }
+}
