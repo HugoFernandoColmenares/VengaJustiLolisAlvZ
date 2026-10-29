@@ -7,9 +7,13 @@ Sitio oficial del grupo **VengaJustiLolis Alv Z**: un chat de WhatsApp que se vo
 - 📝 **Posts** del grupo (solo admins publican).
 - 🌪️ **Lore**: la Grieta, Ralexa, Noira, el Big Onii-chan, las facciones y Ciudad Nueva McOndo.
 
-Sitio publicado: https://feithnoir.github.io/VengaJustiLolisAlvZAwards/
+Sitio publicado: https://hugofernandocolmenares.github.io/VengaJustiLolisAlvZ/
 
-Este repo fusiona dos sitios anteriores: el de premios (de aquí se tomó el estilo cómic) y [vengajustilolisalvz](https://github.com/FeithNoir/vengajustilolisalvz) (de aquí se tomó el lore). Los originales están intactos en [`legacy/`](legacy/).
+## Orígenes
+Este repo fusiona dos sitios anteriores de [FeithNoir](https://github.com/FeithNoir):
+- Premios (de aquí se tomó el estilo cómic): [repo](https://github.com/FeithNoir/VengaJustiLolisAlvZAwards) · [sitio](https://feithnoir.github.io/VengaJustiLolisAlvZAwards/)
+- Lore (de aquí se tomó el contenido): [repo](https://github.com/FeithNoir/vengajustilolisalvz) · [sitio](https://feithnoir.github.io/vengajustilolisalvz/)
+ Los originales están intactos en [`legacy/`](legacy/).
 
 ## Stack
 - **Angular 22** (standalone, signals, `resource()`, `@if/@for`, rutas lazy, zoneless) + SCSS
@@ -27,7 +31,7 @@ npm test -- --watch=false
 ## Build
 ```bash
 npm run build        # dist/vengajusti/browser (+ 404.html y .nojekyll para Pages)
-npm run serve:dist   # http://localhost:4300/VengaJustiLolisAlvZAwards/ (igual que en Pages)
+npm run serve:dist   # http://localhost:4300/VengaJustiLolisAlvZ/ (igual que en Pages)
 ```
 
 ## Deploy
@@ -35,7 +39,7 @@ Cada push a `main` ejecuta `.github/workflows/deploy.yml` (tests → build → G
 Requisito único: **Settings → Pages → Source: GitHub Actions**. Los PR corren `ci.yml` sin desplegar.
 
 ## Configurar Firebase
-1. Crea un proyecto en la consola de Firebase (plan Spark), activa Firestore y Authentication → Google, y agrega `feithnoir.github.io` a los dominios autorizados.
+1. Crea un proyecto en la consola de Firebase (plan Spark), activa Firestore y Authentication → Google, y agrega `hugofernandocolmenares.github.io` a los dominios autorizados.
 2. Registra una app web y pega su `firebaseConfig` en [`src/environments/environment.ts`](src/environments/environment.ts). Si `apiKey` queda vacío, la app usa el modo demo.
 3. `npx firebase-tools deploy --only firestore:rules,firestore:indexes`
 4. Crea `admins/{tuUID}` en Firestore para tener permisos de admin.

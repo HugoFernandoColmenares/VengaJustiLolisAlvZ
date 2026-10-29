@@ -8,7 +8,7 @@
 | Backend (BaaS) | Firebase: Firestore + Firebase Auth (Google), plan **Spark** (gratis) |
 | Modo sin credenciales | `LocalBackend` sobre `localStorage` |
 | Pruebas | Vitest (builder `@angular/build:unit-test`) |
-| Hosting | GitHub Pages en `/VengaJustiLolisAlvZAwards/` con GitHub Actions |
+| Hosting | GitHub Pages en `/VengaJustiLolisAlvZ/` con GitHub Actions |
 | Node | 24 LTS (Angular 22 exige `^22.22.3 || ^24.15 || >=26`) |
 
 ## Estructura de carpetas
@@ -87,9 +87,9 @@ Probar las reglas: `npx firebase-tools emulators:start --only firestore` y apunt
 1. Entra a https://console.firebase.google.com con tu cuenta de Google → **Agregar proyecto** → nombre `vengajusti` → puedes desactivar Google Analytics. El plan por defecto es **Spark** (gratis); no agregues tarjeta.
 2. **Build → Firestore Database → Crear base de datos** → modo producción → región `southamerica-east1` (São Paulo) o `us-central1`.
 3. **Build → Authentication → Comenzar → Método de acceso → Google → Habilitar** (elige el email de soporte).
-4. **Authentication → Configuración → Dominios autorizados → Agregar dominio:** `feithnoir.github.io` (y `localhost` ya viene).
+4. **Authentication → Configuración → Dominios autorizados → Agregar dominio:** `hugofernandocolmenares.github.io` (y `localhost` ya viene).
 5. **Configuración del proyecto (⚙️) → Tus apps → Web (`</>`)** → apodo `vengajusti-web` → *no* marques Firebase Hosting → copia el objeto `firebaseConfig`.
-6. Pega esos valores en `src/environments/environment.ts` (`apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId`). Esta config es **pública por diseño**: la seguridad la dan las reglas, no la clave. Aun así, en **Google Cloud Console → APIs y servicios → Credenciales** puedes restringir la API key a los referers `https://feithnoir.github.io/*` y `http://localhost:*`.
+6. Pega esos valores en `src/environments/environment.ts` (`apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId`). Esta config es **pública por diseño**: la seguridad la dan las reglas, no la clave. Aun así, en **Google Cloud Console → APIs y servicios → Credenciales** puedes restringir la API key a los referers `https://hugofernandocolmenares.github.io/*` y `http://localhost:*`.
 7. Despliega reglas e índices desde tu PC:
    ```bash
    npx firebase-tools login
@@ -102,7 +102,7 @@ Probar las reglas: `npx firebase-tools emulators:start --only firestore` y apunt
 
 ## Flujo de despliegue
 1. `push` a `main` (o *Run workflow* manual) dispara `.github/workflows/deploy.yml`.
-2. Node 24 → `npm ci` → `npm test` → `npm run build` (= `ng build` con `baseHref /VengaJustiLolisAlvZAwards/` + `scripts/spa-404.mjs` que crea `404.html` y `.nojekyll`).
+2. Node 24 → `npm ci` → `npm test` → `npm run build` (= `ng build` con `baseHref /VengaJustiLolisAlvZ/` + `scripts/spa-404.mjs` que crea `404.html` y `.nojekyll`).
 3. Se sube `dist/vengajusti/browser` como artefacto y `actions/deploy-pages` lo publica.
 4. **Una sola vez:** en GitHub → Settings → Pages → *Build and deployment* → **Source: GitHub Actions**.
 
@@ -114,5 +114,5 @@ npm ci
 npm start              # dev server en http://localhost:4200
 npm test -- --watch=false
 npm run build          # build de producción + 404.html
-npm run serve:dist     # sirve el build en http://localhost:4300/VengaJustiLolisAlvZAwards/
+npm run serve:dist     # sirve el build en http://localhost:4300/VengaJustiLolisAlvZ/
 ```
